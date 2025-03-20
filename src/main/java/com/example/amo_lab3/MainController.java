@@ -64,11 +64,13 @@ public class MainController {
     @FXML
     void rememberRange(ActionEvent event) {
         // Обраховуємо значення X
+        int interPow;
         try {
             int[] range = validateInputRange();
             curNodesLabel.setText(String.format("Поточні вузли: [%d, %d]", range[0], range[1]));
+            interPow = Integer.parseInt(textFieldPOW.getText());
             RangeCalculator rangeCalculator = new RangeCalculator(range[0], range[1]);
-            arrayX = rangeCalculator.getRange(10);
+            arrayX = rangeCalculator.getRange(interPow);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             curNodesLabel.setText("Поточні вузли: [-, -]");
@@ -76,10 +78,10 @@ public class MainController {
         }
 
         // Обраховуємо значення Y
-        arrayY = new float[11];
+        arrayY = new float[interPow + 1];
         Function function = new MyFunction();
         System.out.println();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < interPow + 1; i++) {
             arrayY[i] = function.calculate(arrayX[i]);
             System.out.println(arrayY[i]);
         }
