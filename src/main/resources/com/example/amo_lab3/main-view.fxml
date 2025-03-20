@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #ffffff;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.amo_lab3.MainController">
+  <tabs>
+    <Tab text="Розрахунки">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="48.0" fitWidth="244.0" layoutX="128.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Users/nazar/OneDrive/Рабочий%20стол/Education/AMO/lab3/AMO_lab3/src/main/java/com/example/amo_lab3/images/formula.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="119.0" layoutY="143.0" text="Введіть діапазон:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="187.0" layoutY="236.0" mnemonicParsing="false" onAction="#rememberRange" text="Запам'ятати">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="46.0" layoutY="344.0" text="Введіть значення x:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldX" layoutX="199.0" layoutY="339.0" prefHeight="35.0" prefWidth="50.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Button layoutX="252.0" layoutY="339.0" mnemonicParsing="false" onAction="#calculateFunc" text="Розрахувати">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="funcResLabel" layoutX="61.0" layoutY="448.0" text="f(x) = ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="203.0" layoutY="406.0" text="Відповідь">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="errorLabel" layoutX="61.0" layoutY="485.0" text="Похибка: ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="curNodesLabel" layoutX="170.0" layoutY="295.0" text="Поточні вузли: [-, -]">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldPOW" layoutX="334.0" layoutY="184.0" prefHeight="35.0" prefWidth="50.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="111.0" layoutY="189.0" text="Введіть степінь інтерполяції:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="252.0" layoutY="135.0" prefHeight="41.0" prefWidth="148.0">
+                     <children>
+                        <TextField fx:id="textFieldA" layoutX="12.0" layoutY="2.0" prefHeight="35.0" prefWidth="50.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="textFieldB" layoutX="83.0" layoutY="2.0" prefHeight="35.0" prefWidth="50.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="67.0" text="-">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="38.0" prefWidth="10.0" text="[">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="138.0" text="]">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Графіки">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
