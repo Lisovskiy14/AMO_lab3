@@ -14,9 +14,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class MainController {
+    private final int HIGH_INTER_POW = 80;
 
     private float[] arrayX;
     private float[] arrayY;
+
+    private float[] arrayHighX;
+    private float[] arrayHighY;
 
     @FXML
     private ResourceBundle resources;
@@ -29,6 +33,9 @@ public class MainController {
 
     @FXML
     private Label errorLabel;
+
+    @FXML
+    private Label funcHighResLabel;
 
     @FXML
     private Label funcResLabel;
@@ -58,8 +65,19 @@ public class MainController {
         }
         y = polynomial.calculatePolynomial(x);
 
-        funcResLabel.setText("f(x) = " + y);
+        funcResLabel.setText(String.format("f(x) = %f", y));
+
+        // Значення при високому степені інтерполяції
+        polynomial.setArrays(arrayHighX, arrayHighY);
+        float highY = polynomial.calculatePolynomial(x);
+        funcHighResLabel.setText(String.format("При степені інтерполяції %d, f(x) = %f", HIGH_INTER_POW, highY));
+
+        // Оцінка похибки
+        float errorResult = Math.abs((y / highY - 1) * 100);
+        errorLabel.setText(String.format("Похибка: %.2f%%", errorResult));
     }
+
+    private
 
     @FXML
     void rememberRange(ActionEvent event) {
@@ -71,6 +89,9 @@ public class MainController {
             interPow = Integer.parseInt(textFieldPOW.getText());
             RangeCalculator rangeCalculator = new RangeCalculator(range[0], range[1]);
             arrayX = rangeCalculator.getRange(interPow);
+
+            // HighX
+            arrayHighX = rangeCalculator.getRange(HIGH_INTER_POW);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             curNodesLabel.setText("Поточні вузли: [-, -]");
@@ -80,10 +101,16 @@ public class MainController {
         // Обраховуємо значення Y
         arrayY = new float[interPow + 1];
         Function function = new MyFunction();
+
         System.out.println();
         for (int i = 0; i < interPow + 1; i++) {
             arrayY[i] = function.calculate(arrayX[i]);
-            System.out.println(arrayY[i]);
+        }
+
+        arrayHighY = new float[HIGH_INTER_POW + 1];
+        for (int i = 0; i < HIGH_INTER_POW + 1; i++) {
+            arrayHighY[i] = function.calculate(arrayHighX[i]);
+            System.out.println(arrayHighY[i]);
         }
     }
 
