@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -116,7 +118,27 @@
     </Tab>
     <Tab text="Графіки">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" />
+        <AnchorPane fx:id="anchorPaneLineChart" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <LineChart fx:id="lineChart" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="470.0" title="Графік f(x)">
+                    <xAxis>
+                      <NumberAxis label="x" side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" label="f(x)" side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <Button layoutX="134.0" layoutY="426.0" mnemonicParsing="false" onAction="#drawLineChart" text="Намалювати">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="274.0" layoutY="426.0" mnemonicParsing="false" onAction="#clearLineChart" text="Очистити">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
       </content>
     </Tab>
   </tabs>

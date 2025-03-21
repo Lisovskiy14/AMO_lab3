@@ -1,6 +1,7 @@
 package com.example.amo_lab3;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.example.amo_lab3.logic.functions.Function;
@@ -10,6 +11,9 @@ import com.example.amo_lab3.logic.polynomials.Polynomial;
 import com.example.amo_lab3.logic.range.RangeCalculator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -22,11 +26,23 @@ public class MainController {
     private float[] arrayHighX;
     private float[] arrayHighY;
 
+    private ArrayList<Float> arrayInterX;
+    private ArrayList<Float> arrayInterY;
+
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+
+    @FXML
+    private LineChart<Number, Number> lineChart;
+
+    @FXML
+    private NumberAxis xAxis;
+
+    @FXML
+    private NumberAxis yAxis;
 
     @FXML
     private Label curNodesLabel;
@@ -66,6 +82,8 @@ public class MainController {
         y = polynomial.calculatePolynomial(x);
 
         funcResLabel.setText(String.format("f(x) = %f", y));
+        arrayInterX.add(x);
+        arrayInterY.add(y);
 
         // Значення при високому степені інтерполяції
         polynomial.setArrays(arrayHighX, arrayHighY);
@@ -73,11 +91,9 @@ public class MainController {
         funcHighResLabel.setText(String.format("При степені інтерполяції %d, f(x) = %f", HIGH_INTER_POW, highY));
 
         // Оцінка похибки
-        float errorResult = Math.abs((y / highY - 1) * 100);
-        errorLabel.setText(String.format("Похибка: %.2f%%", errorResult));
+        float errorResult = (y / highY - 1) * 100;
+        errorLabel.setText(String.format("Похибка: %.3f%%", errorResult));
     }
-
-    private
 
     @FXML
     void rememberRange(ActionEvent event) {
@@ -114,7 +130,7 @@ public class MainController {
         }
     }
 
-    public int[] validateInputRange() {
+    private int[] validateInputRange() {
         int[] result = new int[2];
         try {
             result[0] = Integer.parseInt(textFieldA.getText());
@@ -126,7 +142,7 @@ public class MainController {
         return result;
     }
 
-    public float validateInputX() {
+    private float validateInputX() {
         float result;
         try {
             result = Float.parseFloat(textFieldX.getText());
@@ -138,14 +154,56 @@ public class MainController {
     }
 
     @FXML
-    void initialize() {
-        assert curNodesLabel != null : "fx:id=\"curNodesLabel\" was not injected: check your FXML file 'main-view.fxml'.";
-        assert errorLabel != null : "fx:id=\"errorLabel\" was not injected: check your FXML file 'main-view.fxml'.";
-        assert funcResLabel != null : "fx:id=\"funcResLabel\" was not injected: check your FXML file 'main-view.fxml'.";
-        assert textFieldA != null : "fx:id=\"textFieldA\" was not injected: check your FXML file 'main-view.fxml'.";
-        assert textFieldB != null : "fx:id=\"textFieldB\" was not injected: check your FXML file 'main-view.fxml'.";
-        assert textFieldX != null : "fx:id=\"textFieldX\" was not injected: check your FXML file 'main-view.fxml'.";
+    void drawLineChart(ActionEvent event) {
+        // Налаштування осей
+        xAxis.setLowerBound(arrayX[0]);
+        xAxis.setUpperBound(arrayX[arrayX.length - 1]);
+        xAxis.setTickUnit((arrayX[arrayX.length - 1] - arrayX[0]) / arrayX.length);
 
+        yAxis.setLowerBound(arrayY[0]);
+        yAxis.setUpperBound(arrayY[arrayY.length - 1]);
+        yAxis.setTickUnit((arrayY[arrayY.length - 1] - arrayY[0]) / arrayY.length);
+
+
+        // Додавання серії даних
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("f(x)");
+
+        // Додавання точок на графік
+        for (int i = 0; i < arrayX.length; i++) {
+            series.getData().add(new XYChart.Data<>(arrayX[i], arrayY[i]));
+        }
+
+        // Додавання серії на графік
+        lineChart.getData().add(series);
+
+
+        // ---------Малювання другого графіка------------
+
+        // Додавання серії даних
+        XYChart.Series<Number, Number> seriesInter = new XYChart.Series<>();
+        seriesInter.setName("f(x) by interpolation");
+
+        // Додавання точок на графік
+        for (int i = 0; i < arrayInterX.size(); i++) {
+            seriesInter.getData().add(new XYChart.Data<>(arrayInterX.get(i), arrayInterY.get(i)));
+        }
+
+        // Додавання серії на графік
+        lineChart.getData().add(seriesInter);
+    }
+
+    @FXML
+    void clearLineChart(ActionEvent event) {
+        lineChart.getData().clear();
+        arrayInterX.clear();
+        arrayInterY.clear();
+    }
+
+    @FXML
+    void initialize() {
+        arrayInterX = new ArrayList<>();
+        arrayInterY = new ArrayList<>();
     }
 
 }
